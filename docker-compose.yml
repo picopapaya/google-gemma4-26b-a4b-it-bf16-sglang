@@ -1,0 +1,41 @@
+# Google Gemma 4 26B-A4B-IT (BF16 weights, FP8 on-the-fly via SGLang) on GB10 / DGX Spark.
+#   HF_TOKEN=hf_xxx docker compose up --build
+services:
+  google-gemma4-26b-a4b-it-bf16-sglang:
+    build:
+      context: .
+      platforms:
+        - linux/arm64        # GB10 is aarch64 — force the arm64 layer.
+    image: google-gemma4-26b-a4b-it-bf16-sglang
+    container_name: google-gemma4-26b-a4b-it-bf16-sglang
+    restart: unless-stopped
+    ipc: host               # SGLang needs a large shared-memory segment.
+    shm_size: "32gb"
+    environment:
+      HF_TOKEN: "${HF_TOKEN:?Set HF_TOKEN — Gemma 4 is gated}"
+      MODEL_ID: "google/gemma-4-26B-A4B-it"
+      QUANTIZATION: "fp8"
+      KV_CACHE_DTYPE: "fp8_e4m3"
+      CONTEXT_LEN: "${CONTEXT_LEN:-65536}"
+      MEM_FRACTION: "${MEM_FRACTION:-0.60}"
+      MAX_RUNNING_REQUESTS: "4"
+      # EXTRA_ARGS: "--enable-dp-attention --disable-cuda-graph"
+    volumes:
+      - hf-cache:/root/.cache/huggingface
+    networks:
+      - llm-net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  hf-cache:
+
+networks:
+  llm-net:
+    external: true
+    name: llm-net
