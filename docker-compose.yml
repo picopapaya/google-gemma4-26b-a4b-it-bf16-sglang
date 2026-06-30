@@ -1,12 +1,8 @@
 # Google Gemma 4 26B-A4B-IT (BF16 weights, FP8 on-the-fly via SGLang) on GB10 / DGX Spark.
-#   HF_TOKEN=hf_xxx docker compose up --build
+#   HF_TOKEN=hf_xxx docker compose up
 services:
   google-gemma4-26b-a4b-it-bf16-sglang:
-    build:
-      context: .
-      platforms:
-        - linux/arm64        # GB10 is aarch64 — force the arm64 layer.
-    image: google-gemma4-26b-a4b-it-bf16-sglang
+    image: picopapaya/google-gemma4-26b-a4b-it-bf16-sglang:latest
     container_name: google-gemma4-26b-a4b-it-bf16-sglang
     restart: unless-stopped
     ipc: host               # SGLang needs a large shared-memory segment.
