@@ -1,0 +1,6 @@
+services:
+  google-gemma4-26b-a4b-it-bf16-sglang:
+    build:
+      context: .
+      platforms:
+        - linux/arm64

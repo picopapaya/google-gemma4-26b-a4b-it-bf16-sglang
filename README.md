@@ -40,7 +40,11 @@ SGLang's `--quantization fp8` flag loads the official BF16 weights and converts 
 ## Usage
 
 ```bash
-HF_TOKEN=hf_xxx docker compose up --build
+# Prod — pull image from Docker Hub
+HF_TOKEN=hf_xxx docker compose up
+
+# Dev — build image locally
+HF_TOKEN=hf_xxx docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 ```
 
 The server starts on port **30000** and exposes an OpenAI-compatible API once the health check passes (allow up to 10 minutes for the first run while weights download).
