@@ -1,4 +1,4 @@
-# google-gemma4-26b-a4b-bf16-it-sglang
+# google-gemma4-26b-a4b-it-bf16-sglang
 
 Docker image that runs **Google Gemma 4 26B-A4B-IT** as an OpenAI-compatible API server, built for the **NVIDIA GB10 (DGX Spark)**.
 

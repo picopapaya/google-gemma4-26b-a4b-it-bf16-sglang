@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: picopapaya/google-gemma4-26b-a4b-bf16-it-sglang
+  IMAGE_NAME: picopapaya/google-gemma4-26b-a4b-it-bf16-sglang
 
 jobs:
   build-and-push:
